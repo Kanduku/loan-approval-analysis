@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './LoanForm.css';
 
 function LoanForm({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -36,12 +37,14 @@ function LoanForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="loan-form" onSubmit={handleSubmit}>
+      <h2 className="form-title">Loan Prediction Form</h2>
       {Object.entries(formData).map(([key, val]) => (
-        <div key={key}>
-          <label>{key.replace(/_/g, ' ')}</label>
+        <div className="form-group" key={key}>
+          <label className="form-label">{key.replace(/_/g, ' ')}</label>
           {["applicant_income", "coapplicant_income", "loan_amount"].includes(key) ? (
             <input
+              className="form-input"
               type="number"
               name={key}
               value={val}
@@ -49,7 +52,12 @@ function LoanForm({ onSubmit }) {
               required
             />
           ) : (
-            <select name={key} value={val} onChange={handleChange}>
+            <select
+              className="form-select"
+              name={key}
+              value={val}
+              onChange={handleChange}
+            >
               {options[key].map(option => (
                 <option key={option}>{option}</option>
               ))}
@@ -57,7 +65,7 @@ function LoanForm({ onSubmit }) {
           )}
         </div>
       ))}
-      <button type="submit">💰 Predict</button>
+      <button className="submit-btn" type="submit">💰 Predict</button>
     </form>
   );
 }
